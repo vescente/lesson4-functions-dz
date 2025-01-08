@@ -34,20 +34,58 @@
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
 
-while True:
-    print('1. пополнение счета')
-    print('2. покупка')
-    print('3. история покупок')
-    print('4. выход')
 
-    choice = input('Выберите пункт меню')
-    if choice == '1':
-        pass
-    elif choice == '2':
-        pass
-    elif choice == '3':
-        pass
-    elif choice == '4':
-        break
+def deposit(balance):
+    amount = float(input('Enter the amount to deposit: '))
+    balance += amount
+    print(f'Account credited with {amount}. Current balance: {balance}')
+    return balance
+
+
+def purchase(balance, history):
+    amount = float(input('Enter the purchase amount: '))
+    if amount > balance:
+        print('Insufficient funds.')
     else:
-        print('Неверный пункт меню')
+        item = input('Enter the name of the purchase: ')
+        balance -= amount
+        history.append((item, amount))
+        print(f'Purchase {item} for {
+              amount} completed. Current balance: {balance}')
+    return balance, history
+
+
+def purchase_history(history):
+    if not history:
+        print('Purchase history is empty.')
+    else:
+        for item, amount in history:
+            print(f'{item}: {amount}')
+    return
+
+
+def main():
+    balance = 0
+    history = []
+
+    while True:
+        print('1. Deposit')
+        print('2. Purchase')
+        print('3. Purchase history')
+        print('4. Exit')
+
+        choice = input('Choose an option: ')
+        if choice == '1':
+            balance = deposit(balance)
+        elif choice == '2':
+            balance, history = purchase(balance, history)
+        elif choice == '3':
+            purchase_history(history)
+        elif choice == '4':
+            break
+        else:
+            print('Invalid option')
+
+
+if __name__ == "__main__":
+    main()
